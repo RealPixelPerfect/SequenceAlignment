@@ -11,6 +11,8 @@ package sequencealignment;
  */
 public class Sequence {
     protected String sequenceString;
+
+    
     
     Sequence(String sequenceString){
         this.sequenceString=sequenceString;

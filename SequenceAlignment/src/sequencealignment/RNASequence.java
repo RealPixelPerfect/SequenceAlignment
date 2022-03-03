@@ -12,7 +12,7 @@ package sequencealignment;
 public class RNASequence extends Sequence {
 
     public RNASequence(String sequenceString) {
-        this.sequenceString=sequenceString;
+        super(sequenceString);
     }
     
 }

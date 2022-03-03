@@ -11,6 +11,6 @@ package sequencealignment;
  */
 public class ProteinSequence extends Sequence {
     public ProteinSequence(String sequenceString){
-        this.sequenceString=sequenceString;
+        super(sequenceString);
     }
 }

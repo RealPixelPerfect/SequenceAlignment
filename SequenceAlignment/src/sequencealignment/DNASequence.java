@@ -11,6 +11,6 @@ package sequencealignment;
  */
 public class DNASequence extends NucleotideSequence {
     public DNASequence(String sequenceString){
-        this.sequenceString=sequenceString;
+        super(sequenceString);
     }
 }
