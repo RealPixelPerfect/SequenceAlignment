@@ -5,6 +5,7 @@
  */
 package sequencealignment;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -20,6 +21,8 @@ public class Aligner {
     { 1, 2,-1,-1},
     {-1,-1, 2, 1},
     {-1,-1, 1, 2}};
+    
+    static final int gap=0;
     
     static final int[][] proteinSubstitutionMatrix={
             { 4,-1,-2,-2, 0,-1,-1, 0,-2,-1,-1,-1,-1,-2,-1, 1, 0,-3,-2, 0,-2,-1,-1,-1,-4},
@@ -52,7 +55,57 @@ public class Aligner {
     Aligner(){
     }
     
-    ArrayList<String> needlemanWunsch(ArrayList<String> sequenceArray){
-        return new ArrayList<String>();
+    ArrayList<DNASequence> needlemanWunsch(ArrayList<DNASequence> sequenceArray){
+        if(sequenceArray.size()<2){
+            return null;
+        } else if(sequenceArray.size()==2){
+            String sequence1=sequenceArray.get(0).getSequence();
+            int sequence1Size=sequence1.length();
+            String sequence2=sequenceArray.get(1).getSequence();
+            int sequence2Size=sequence2.length();
+            ArrayList<DNASequence> returnArray = new ArrayList<>();
+            HashMap<Point,Integer> alignmentGrid = new HashMap();
+            //Set edges first
+            int edgeScore=0;
+            for(int column=0;column<sequence2Size+1;column++){
+                alignmentGrid.put(new Point(0,column), edgeScore);
+                edgeScore+=gap;
+            }
+            /*ATGATCGATCGATC
+              ATAGATCGATCT
+            
+               0 A  T  G  A  T  C  G  A  T  C  G  A  T  C
+            0
+            
+            A
+            
+            T
+            
+            A
+            
+            G
+            
+            A
+            
+            T
+            
+            C
+            
+            G
+            
+            A
+            
+            T
+            
+            C
+            
+            T
+            
+            */
+            
+            return returnArray;
+        } else{
+            return null;
+        }
     }
 }
