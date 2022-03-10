@@ -42,47 +42,54 @@ public class GUI extends JFrame {
             //gbc.gridheight = 6;
             //gbc.gridwidth = 9;
             
-            gbc.fill = GridBagConstraints.VERTICAL;
-            gbc.fill = GridBagConstraints.HORIZONTAL;
-            gbc.ipadx = 100;
-            gbc.ipady = 100;
+            gbc.fill = GridBagConstraints.NONE;
+            gbc.ipadx = 50;
+            gbc.ipady = 50;
             
             //Sequence 1 label
             JLabel seq1Label = new JLabel("Sequence 1");
             gbc.gridx = 1;
             gbc.gridy = 1;
-            gbc.gridwidth = 2;
+            gbc.gridwidth = 1;
             gbc.gridheight = 1;
             
             add(seq1Label, gbc);
             
-            //Sequence 1 textArea
+            //Sequence 1 textpane
             
-            JTextArea seq1Area = new JTextArea("2222222222", 5, 50);
-            gbc.gridx = 3;
+            JTextArea seq1Area = new JTextArea(5, 50);
+            seq1Area.setLineWrap(true);
+            JScrollPane seq1Pane = new JScrollPane(seq1Area);
+            seq1Pane.setLayout(new ScrollPaneLayout());
+            seq1Pane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+            gbc.gridx = 2;
             gbc.gridy = 1;
-            gbc.gridwidth = 5;
+            gbc.gridwidth = 6;
             gbc.gridheight = 2;
-            add(seq1Area, gbc);
+            add(seq1Pane, gbc);
             
             //Sequence 2 lable
             JLabel seq2Label = new JLabel("Sequence 2");
             gbc.gridx = 1;
             gbc.gridy = 3;
-            gbc.gridwidth = 2;
+            gbc.gridwidth = 1;
             gbc.gridheight = 1;
             add(seq2Label, gbc);
             
-            //Sequence 2 textArea
-            JTextArea seq2Area = new JTextArea("2222222222", 5, 50);
-            gbc.gridx = 3;
+            //Sequence 2 textpane            
+            JTextArea seq2Area = new JTextArea(5, 50);
+            seq2Area.setLineWrap(true);
+            JScrollPane seq2Pane = new JScrollPane(seq2Area);
+            seq2Pane.setLayout(new ScrollPaneLayout());
+            seq2Pane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+            gbc.gridx = 2;
             gbc.gridy = 3;
-            gbc.gridwidth = 5;
+            gbc.gridwidth = 6;
             gbc.gridheight = 2;
-            add(seq2Area, gbc);
+            add(seq2Pane, gbc);
             
             //Convert DNA Button
-            JButton convertDNAButton = new JButton("Convert DNA");
+            JButton convertDNAButton = new JButton("   Convert DNA   ");
             gbc.gridx = 9;
             gbc.gridy = 1;
             gbc.gridwidth = 1;
@@ -90,7 +97,7 @@ public class GUI extends JFrame {
             add(convertDNAButton, gbc);
             
             //Convert RNA Button
-            JButton convertRNAButton = new JButton("Convert RNA");
+            JButton convertRNAButton = new JButton("   Convert RNA   ");
             gbc.gridx = 9;
             gbc.gridy = 2;
             gbc.gridwidth = 1;
@@ -105,13 +112,13 @@ public class GUI extends JFrame {
             gbc.gridheight = 1;
             add(convertProteinButton, gbc);
             
-            //Sequence Allign Button
-            JButton sequenceAllignButton = new JButton("Sequence Allign");
+            //Sequence Align Button
+            JButton sequenceAlignButton = new JButton("Sequence Align");
             gbc.gridx = 9;
             gbc.gridy = 4;
             gbc.gridwidth = 1;
             gbc.gridheight = 1;
-            add(sequenceAllignButton, gbc);
+            add(sequenceAlignButton, gbc);
             
             
             
