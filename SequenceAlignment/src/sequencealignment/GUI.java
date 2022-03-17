@@ -9,6 +9,11 @@ public class GUI extends JFrame {
     
     JLabel header = new JLabel("Sequence Alignment");
     Grid grid = new Grid();
+
+    JLabel seq1Label, seq2Label;
+    JTextArea seq1Area, seq2Area;
+    JButton convertDNAButton, convertRNAButton, convertProteinButton, sequenceAlignButton;
+    JRadioButton dnaTypeRadioButton, rnaTypeRadioButton, proteinTypeRadioButton;
     
     GUI(){
         MainPanel mainPanel = new MainPanel();
@@ -18,8 +23,8 @@ public class GUI extends JFrame {
         pack();
         setLocationRelativeTo(null);
         setExtendedState(MAXIMIZED_BOTH);
-        setVisible(true);
-        
+        setMinimumSize(new Dimension(924, 417));
+        setVisible(true);      
     }
     
     class MainPanel extends JPanel{
@@ -35,117 +40,122 @@ public class GUI extends JFrame {
         Grid(){
             GridBagLayout grid = new GridBagLayout();
             setLayout(grid);
-            //add(new JLabel("Type: "));
             
             //Grid Constraints
             GridBagConstraints gbc = new GridBagConstraints();
-            //gbc.gridheight = 6;
-            //gbc.gridwidth = 9;
             
             gbc.fill = GridBagConstraints.NONE;
             gbc.ipadx = 50;
             gbc.ipady = 50;
             
             //Sequence 1 label
-            JLabel seq1Label = new JLabel("Sequence 1");
-            gbc.gridx = 1;
+            seq1Label = new JLabel("Sequence 1");
+            gbc.gridx = 0;
             gbc.gridy = 1;
             gbc.gridwidth = 1;
             gbc.gridheight = 1;
-            
             add(seq1Label, gbc);
             
             //Sequence 1 textpane
             
-            JTextArea seq1Area = new JTextArea(5, 50);
+            seq1Area = new JTextArea(5, 50);
             seq1Area.setLineWrap(true);
             JScrollPane seq1Pane = new JScrollPane(seq1Area);
             seq1Pane.setLayout(new ScrollPaneLayout());
             seq1Pane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-            gbc.gridx = 2;
+            gbc.gridx = 1;
             gbc.gridy = 1;
             gbc.gridwidth = 6;
             gbc.gridheight = 2;
             add(seq1Pane, gbc);
             
             //Sequence 2 lable
-            JLabel seq2Label = new JLabel("Sequence 2");
-            gbc.gridx = 1;
+            seq2Label = new JLabel("Sequence 2");
+            gbc.gridx = 0;
             gbc.gridy = 3;
             gbc.gridwidth = 1;
             gbc.gridheight = 1;
             add(seq2Label, gbc);
             
             //Sequence 2 textpane            
-            JTextArea seq2Area = new JTextArea(5, 50);
+            seq2Area = new JTextArea(5, 50);
             seq2Area.setLineWrap(true);
             JScrollPane seq2Pane = new JScrollPane(seq2Area);
             seq2Pane.setLayout(new ScrollPaneLayout());
             seq2Pane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-            gbc.gridx = 2;
+            gbc.gridx = 1;
             gbc.gridy = 3;
             gbc.gridwidth = 6;
             gbc.gridheight = 2;
             add(seq2Pane, gbc);
             
             //Convert DNA Button
-            JButton convertDNAButton = new JButton("   Convert DNA   ");
-            gbc.gridx = 9;
+            convertDNAButton = new JButton("   Convert DNA   ");
+            gbc.gridx = 8;
             gbc.gridy = 1;
             gbc.gridwidth = 1;
             gbc.gridheight = 1;
             add(convertDNAButton, gbc);
             
             //Convert RNA Button
-            JButton convertRNAButton = new JButton("   Convert RNA   ");
-            gbc.gridx = 9;
+            convertRNAButton = new JButton("   Convert RNA   ");
+            gbc.gridx = 8;
             gbc.gridy = 2;
             gbc.gridwidth = 1;
             gbc.gridheight = 1;
             add(convertRNAButton, gbc);
             
             //Convert Protein Button
-            JButton convertProteinButton = new JButton("Convert Protein");
-            gbc.gridx = 9;
+            convertProteinButton = new JButton("Convert Protein");
+            gbc.gridx = 8;
             gbc.gridy = 3;
             gbc.gridwidth = 1;
             gbc.gridheight = 1;
             add(convertProteinButton, gbc);
             
             //Sequence Align Button
-            JButton sequenceAlignButton = new JButton("Sequence Align");
-            gbc.gridx = 9;
+            sequenceAlignButton = new JButton("Sequence Align");
+            gbc.gridx = 8;
             gbc.gridy = 4;
             gbc.gridwidth = 1;
             gbc.gridheight = 1;
             add(sequenceAlignButton, gbc);
             
-            
-            
-            
-            
-            
-            
-            //Type buttons
-           /* JRadioButton dnaTypeRadioButton = new JRadioButton("DNA");
-            JRadioButton rnaTypeRadioButton = new JRadioButton("RNA");
-            JRadioButton proteinTypeRadioButton = new JRadioButton("Protein");        
+            //Radio Buttons
             ButtonGroup typeGroup = new ButtonGroup();
+            
+            dnaTypeRadioButton = new JRadioButton("DNA");
+            gbc.gridx = 2;
+            gbc.gridy = 0;
             typeGroup.add(dnaTypeRadioButton);
+            dnaTypeRadioButton.addActionListener(new ActionListener(){@Override public void actionPerformed(ActionEvent e){/*ADD CODE HERE*/}});
+            add(dnaTypeRadioButton, gbc);
+            
+            rnaTypeRadioButton = new JRadioButton("RNA");
+            gbc.gridx = 3;
+            gbc.gridy = 0;
             typeGroup.add(rnaTypeRadioButton);
+            rnaTypeRadioButton.addActionListener(new ActionListener(){@Override public void actionPerformed(ActionEvent e){/*ADD CODE HERE*/}});
+            add(rnaTypeRadioButton, gbc);   
+            
+            proteinTypeRadioButton = new JRadioButton("Protein"); 
+            gbc.gridx = 4;
+            gbc.gridy = 0;
             typeGroup.add(proteinTypeRadioButton);
-            dnaTypeRadioButton.addActionListener(new ActionListener(){@Override public void actionPerformed(ActionEvent e){/*ADD CODE HERE*///}});
-            //rnaTypeRadioButton.addActionListener(new ActionListener(){@Override public void actionPerformed(ActionEvent e){/*ADD CODE HERE*///}});
-            //proteinTypeRadioButton.addActionListener(new ActionListener(){@Override public void actionPerformed(ActionEvent e){/*ADD CODE HERE*///}});
-            /*add(dnaTypeRadioButton);
-            add(rnaTypeRadioButton);
-            add(proteinTypeRadioButton);
+            proteinTypeRadioButton.addActionListener(new ActionListener(){@Override public void actionPerformed(ActionEvent e){/*ADD CODE HERE*/}});
+            add(proteinTypeRadioButton, gbc);
             
-            
-            
-            add(new JButton("Long-Named Button 4"));
-            add(new JButton("5")); */
         }
-        
+            
+    }
+    
+    public String getText(int sequence){
+        String s = "";
+        if(sequence == 1){
+            s = seq1Area.getText();
+        }else if(sequence == 2){
+            s = seq2Area.getText();
+        }
+        return s;
     }
 }
