@@ -22,7 +22,7 @@ public class Aligner {
     {-1,-1, 2, 1},
     {-1,-1, 1, 2}};
     
-    static final int gap=0;
+    static final int gap=-1;
     
     static final int[][] proteinSubstitutionMatrix={
             { 4,-1,-2,-2, 0,-1,-1, 0,-2,-1,-1,-1,-1,-2,-1, 1, 0,-3,-2, 0,-2,-1,-1,-1,-4},
@@ -52,54 +52,179 @@ public class Aligner {
             {-4,-4,-4,-4,-4,-4,-4,-4,-4,-4,-4,-4,-4,-4,-4,-4,-4,-4,-4,-4,-4,-4,-4,-4, 1}
     };
     
-    Aligner(){
-    }
-    
     ArrayList<DNASequence> needlemanWunsch(ArrayList<DNASequence> sequenceArray){
         if(sequenceArray.size()<2){
             return null;
         } else if(sequenceArray.size()==2){
+            class Match{
+            
+            Match(int score, char origin){
+                this.score=score;
+                this.origin=origin;
+            }
+            
+            int score=0;
+            char origin; //u: up, d: diagonal, l: left, s: start
+        }
             String sequence1=sequenceArray.get(0).getSequence();
             int sequence1Size=sequence1.length();
             String sequence2=sequenceArray.get(1).getSequence();
             int sequence2Size=sequence2.length();
+            System.out.print("Seq1: ");
+            for(char c:sequence1.toCharArray()){
+                System.out.print((int)c);
+            }
+            System.out.println();
+            System.out.print("Seq2: ");
+            for(char c:sequence2.toCharArray()){
+                System.out.print((int)c);
+            }
+            System.out.println();
             ArrayList<DNASequence> returnArray = new ArrayList<>();
-            HashMap<Point,Integer> alignmentGrid = new HashMap();
+            HashMap<Point,Match> alignmentGrid = new HashMap();
             //Set edges first
-            int edgeScore=0;
-            for(int column=0;column<sequence2Size+1;column++){
-                alignmentGrid.put(new Point(0,column), edgeScore);
+            Match upperLeftCorner = new Match(0,'s');
+            alignmentGrid.put(new Point(0,0), upperLeftCorner);
+            int edgeScore=gap;
+            for(int column=1;column<sequence2Size+1;column++){
+                Match edgeMatch = new Match(edgeScore,'l');
+                alignmentGrid.put(new Point(0,column), edgeMatch);
                 edgeScore+=gap;
             }
+            edgeScore=gap;
+            for(int row=1;row<sequence1Size+1;row++){
+                Match edgeMatch=new Match(edgeScore,'u');
+                alignmentGrid.put(new Point(row,0), edgeMatch);
+                edgeScore+=gap;
+            }
+            for (Point p:alignmentGrid.keySet()){
+                char origin=alignmentGrid.get(p).origin;
+                System.out.println("row: "+p.x+" column: "+p.y+" value: "+alignmentGrid.get(p).score+" origin: "+origin);
+            }
+            
+            //Fill out the rest of the matrix one row at a time
+            //Matchningar som inte används kan ignoreras
+            //Ger NullPointerException
+            for(int row=1;row<sequence1Size+1;row++){
+                for(int column=1;column<sequence2Size+1;column++){
+                    System.out.println("row: "+row+" column: "+column);
+                    Match down=alignmentGrid.get(new Point(row-1,column));
+                    int downScore=down.score+gap;
+                    Match diagonal=alignmentGrid.get(new Point(row-1,column-1));
+                    int base1=(int)sequence1.charAt(row-1);
+                    int base2=(int)sequence1.charAt(column-1);
+                    int diagonalScore=diagonal.score+dnaSubstitutionMatrix[base1][base2];
+                    Match right=alignmentGrid.get(new Point(row,column-1));
+                    int rightScore=right.score+gap;
+                    int currentScore;
+                    char currentOrigin;
+                    if(diagonalScore>=downScore&&diagonalScore>=rightScore){
+                        currentScore=diagonalScore;
+                        currentOrigin='d';
+                        System.out.println("diagonal is best");
+                    } else if(downScore>=rightScore){
+                        currentScore=downScore;
+                        currentOrigin='u';
+                        System.out.println("down is best");
+                    } else{
+                        currentScore=rightScore;
+                        currentOrigin='l';
+                        System.out.println("right is best");
+                    }
+                    alignmentGrid.put(new Point(row,column), new Match(currentScore, currentOrigin));
+                }
+            }
+            
+            //Trace path backwards
+            String alignedSequence1="";
+            String alignedSequence2="";
+            char direction;
+            int row=sequence1Size;
+            int column=sequence2Size;
+            boolean stop=false;
+            do{
+                Match currentMatch=alignmentGrid.get(new Point(row,column));
+                direction=currentMatch.origin;
+                switch (direction){
+                    case 'd':
+                        System.out.println("d");
+                        alignedSequence1=sequence1.charAt(row-1)+alignedSequence1;
+                        alignedSequence2=sequence2.charAt(column-1)+alignedSequence2;
+                        row--;
+                        column--;
+                        break;
+                    case 'u':
+                        System.out.println("u");
+                        alignedSequence1=sequence1.charAt(row-1)+alignedSequence1;
+                        alignedSequence2=(char)-1+alignedSequence2;
+                        row--;
+                        break;
+                    case 'l':
+                        System.out.println("l");
+                        alignedSequence1=(char)-1+alignedSequence1;
+                        alignedSequence2=sequence2.charAt(column-1)+alignedSequence2;
+                        column--;
+                        break;
+                }
+            }while(direction!='s');
+            
+            returnArray.add(new DNASequence(alignedSequence1));
+            returnArray.add(new DNASequence(alignedSequence2));
+            
+            //Calculate the best path for each point
             /*ATGATCGATCGATC
               ATAGATCGATCT
             
-               0 A  T  G  A  T  C  G  A  T  C  G  A  T  C
-            0
+               0   A   T   A   C   G   G   G   C   T   A   A   C
+            0  0  -1  -2  -3  -4  -5  -6  -7  -8  -9  -10 -11 -12
+                                                                
+            T -1   1   1
+                                                                  
+            G -2
+                                                                  
+            G -3
+                                                                
+            A -4
+                                                                  
+            A -5
+                                                                  
+            C -6
+                                                                  
+            G -7
+                                                                       
+            C -8
+                                                                    
+            C -9
+                                                                              
+            T -10
+                                                                         
+            A -11
             
-            A
+            
+               0  A  T  A  C  G  G  G  C  T  A  A  C
+            0  
             
             T
             
-            A
+            G
             
             G
             
             A
             
-            T
+            A
             
             C
             
             G
             
-            A
-            
-            T
+            C
             
             C
             
             T
+            
+            A
             
             */
             
