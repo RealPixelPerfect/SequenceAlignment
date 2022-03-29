@@ -2,6 +2,7 @@ package sequencealignment;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.*;
 import javax.swing.*;
 import javax.swing.text.*;
 
@@ -14,6 +15,9 @@ public class GUI extends JFrame {
     JTextArea seq1Area, seq2Area;
     JButton convertDNAButton, convertRNAButton, convertProteinButton, sequenceAlignButton;
     JRadioButton dnaTypeRadioButton, rnaTypeRadioButton, proteinTypeRadioButton;
+    
+    //Is data DNA = D, RNA = R or Protein = P
+    char typeOfData = ' ';
     
     GUI(){
         MainPanel mainPanel = new MainPanel();
@@ -119,6 +123,8 @@ public class GUI extends JFrame {
             gbc.gridy = 4;
             gbc.gridwidth = 1;
             gbc.gridheight = 1;
+            sequenceAlignButton.addActionListener(new ActionListener(){@Override public void actionPerformed(ActionEvent e){sequenceAlign();}});
+
             add(sequenceAlignButton, gbc);
             
             //Radio Buttons
@@ -128,27 +134,60 @@ public class GUI extends JFrame {
             gbc.gridx = 2;
             gbc.gridy = 0;
             typeGroup.add(dnaTypeRadioButton);
-            dnaTypeRadioButton.addActionListener(new ActionListener(){@Override public void actionPerformed(ActionEvent e){/*ADD CODE HERE*/}});
+            dnaTypeRadioButton.addActionListener(new ActionListener(){@Override public void actionPerformed(ActionEvent e){typeOfData = 'D';}});
             add(dnaTypeRadioButton, gbc);
             
             rnaTypeRadioButton = new JRadioButton("RNA");
             gbc.gridx = 3;
             gbc.gridy = 0;
             typeGroup.add(rnaTypeRadioButton);
-            rnaTypeRadioButton.addActionListener(new ActionListener(){@Override public void actionPerformed(ActionEvent e){/*ADD CODE HERE*/}});
+            rnaTypeRadioButton.addActionListener(new ActionListener(){@Override public void actionPerformed(ActionEvent e){typeOfData = 'R';}});
             add(rnaTypeRadioButton, gbc);   
             
             proteinTypeRadioButton = new JRadioButton("Protein"); 
             gbc.gridx = 4;
             gbc.gridy = 0;
             typeGroup.add(proteinTypeRadioButton);
-            proteinTypeRadioButton.addActionListener(new ActionListener(){@Override public void actionPerformed(ActionEvent e){/*ADD CODE HERE*/}});
+            proteinTypeRadioButton.addActionListener(new ActionListener(){@Override public void actionPerformed(ActionEvent e){typeOfData = 'P';}});
             add(proteinTypeRadioButton, gbc);
             
         }
             
     }
     
+    private void sequenceAlign() {
+        String str1 = getText(1);
+        String str2 = getText(2);
+        Parser pars1 = new Parser(str1);
+        Parser pars2 = new Parser(str2);
+        
+        if(typeOfData == 'D'){
+            ArrayList <DNASequence> out = new ArrayList<>();
+            out.add(pars1.parseDNA());
+            out.add(pars2.parseDNA());
+            Aligner aligner = new Aligner();
+            out = aligner.needlemanWunsch(out);
+            seq1Area.setText(out.get(0).toReadable());
+            seq2Area.setText(out.get(1).toReadable());
+        } else if(typeOfData == 'E'){
+            ArrayList <RNASequence> out = new ArrayList<>();
+            out.add(pars1.parseRNA());
+            out.add(pars2.parseRNA());
+            Aligner aligner = new Aligner();
+            out = aligner.needlemanWunsch(out);
+            seq1Area.setText(out.get(0).toReadable());
+            seq2Area.setText(out.get(1).toReadable());
+        } else if(typeOfData == 'P'){
+            ArrayList <ProteinSequence> out = new ArrayList<>();
+            out.add(pars1.parseProtein());
+            out.add(pars2.parseProtein());
+            Aligner aligner = new Aligner();
+            out = aligner.needlemanWunsch(out);
+            seq1Area.setText(out.get(0).toReadable());
+            seq2Area.setText(out.get(1).toReadable());
+        }           
+    }
+
     public String getText(int sequence){
         String s = "";
         if(sequence == 1){
