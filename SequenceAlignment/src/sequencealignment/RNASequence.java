@@ -21,25 +21,15 @@ public class RNASequence extends Sequence {
         String output = "";
         
         for (int i = 0; i < sequenceString.length(); i++) {
-            switch(initialCharArray[i]){
-                case 0:
-                    output += "A";
-                    break;
-                case 1:
-                    output += "U";
-                    break;
-                case 2:
-                    output += "C";
-                    break;
-                case 3:
-                    output += "G";
-                    break;
-                case Parser.DASH:
-                    output += "-";
-                    break;
-            }
+             if(initialCharArray[i] == Parser.DASH){
+                output += '-';
+            } else {
+                output += (char)Parser.RNA_LETTERS.indexOf(initialCharArray[i]);
+            }    
         }
+        
         return output;
+
     }
     
 }

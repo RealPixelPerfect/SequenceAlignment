@@ -7,7 +7,7 @@ import javax.swing.*;
 import javax.swing.text.*;
 
 public class GUI extends JFrame {
-    
+
     JLabel header = new JLabel("Sequence Alignment");
     Grid grid = new Grid();
 
@@ -15,11 +15,11 @@ public class GUI extends JFrame {
     JTextArea seq1Area, seq2Area;
     JButton convertDNAButton, convertRNAButton, convertProteinButton, sequenceAlignButton;
     JRadioButton dnaTypeRadioButton, rnaTypeRadioButton, proteinTypeRadioButton;
-    
+
     //Is data DNA = D, RNA = R or Protein = P
     char typeOfData = ' ';
-    
-    GUI(){
+
+    GUI() {
         MainPanel mainPanel = new MainPanel();
         add(grid);
         setTitle("Sequence Alignment");
@@ -28,30 +28,30 @@ public class GUI extends JFrame {
         setLocationRelativeTo(null);
         setExtendedState(MAXIMIZED_BOTH);
         setMinimumSize(new Dimension(924, 417));
-        setVisible(true);      
+        setVisible(true);
     }
-    
-    class MainPanel extends JPanel{
-        
-        MainPanel(){
+
+    class MainPanel extends JPanel {
+
+        MainPanel() {
             setBackground(Color.LIGHT_GRAY);
-        }        
+        }
 
     }
-    
-    class Grid extends JPanel{
-        
-        Grid(){
+
+    class Grid extends JPanel {
+
+        Grid() {
             GridBagLayout grid = new GridBagLayout();
             setLayout(grid);
-            
+
             //Grid Constraints
             GridBagConstraints gbc = new GridBagConstraints();
-            
+
             gbc.fill = GridBagConstraints.NONE;
             gbc.ipadx = 50;
             gbc.ipady = 50;
-            
+
             //Sequence 1 label
             seq1Label = new JLabel("Sequence 1");
             gbc.gridx = 0;
@@ -59,9 +59,8 @@ public class GUI extends JFrame {
             gbc.gridwidth = 1;
             gbc.gridheight = 1;
             add(seq1Label, gbc);
-            
+
             //Sequence 1 textpane
-            
             seq1Area = new JTextArea(5, 50);
             seq1Area.setLineWrap(true);
             JScrollPane seq1Pane = new JScrollPane(seq1Area);
@@ -72,7 +71,7 @@ public class GUI extends JFrame {
             gbc.gridwidth = 6;
             gbc.gridheight = 2;
             add(seq1Pane, gbc);
-            
+
             //Sequence 2 lable
             seq2Label = new JLabel("Sequence 2");
             gbc.gridx = 0;
@@ -80,7 +79,7 @@ public class GUI extends JFrame {
             gbc.gridwidth = 1;
             gbc.gridheight = 1;
             add(seq2Label, gbc);
-            
+
             //Sequence 2 textpane            
             seq2Area = new JTextArea(5, 50);
             seq2Area.setLineWrap(true);
@@ -92,7 +91,7 @@ public class GUI extends JFrame {
             gbc.gridwidth = 6;
             gbc.gridheight = 2;
             add(seq2Pane, gbc);
-            
+
             //Convert DNA Button
             convertDNAButton = new JButton("   Convert DNA   ");
             gbc.gridx = 8;
@@ -100,7 +99,7 @@ public class GUI extends JFrame {
             gbc.gridwidth = 1;
             gbc.gridheight = 1;
             add(convertDNAButton, gbc);
-            
+
             //Convert RNA Button
             convertRNAButton = new JButton("   Convert RNA   ");
             gbc.gridx = 8;
@@ -108,7 +107,7 @@ public class GUI extends JFrame {
             gbc.gridwidth = 1;
             gbc.gridheight = 1;
             add(convertRNAButton, gbc);
-            
+
             //Convert Protein Button
             convertProteinButton = new JButton("Convert Protein");
             gbc.gridx = 8;
@@ -116,83 +115,103 @@ public class GUI extends JFrame {
             gbc.gridwidth = 1;
             gbc.gridheight = 1;
             add(convertProteinButton, gbc);
-            
+
             //Sequence Align Button
             sequenceAlignButton = new JButton("Sequence Align");
             gbc.gridx = 8;
             gbc.gridy = 4;
             gbc.gridwidth = 1;
             gbc.gridheight = 1;
-            sequenceAlignButton.addActionListener(new ActionListener(){@Override public void actionPerformed(ActionEvent e){sequenceAlign();}});
+            sequenceAlignButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    sequenceAlign();
+                }
+            });
 
             add(sequenceAlignButton, gbc);
-            
+
             //Radio Buttons
             ButtonGroup typeGroup = new ButtonGroup();
-            
+
             dnaTypeRadioButton = new JRadioButton("DNA");
             gbc.gridx = 2;
             gbc.gridy = 0;
             typeGroup.add(dnaTypeRadioButton);
-            dnaTypeRadioButton.addActionListener(new ActionListener(){@Override public void actionPerformed(ActionEvent e){typeOfData = 'D';}});
+            dnaTypeRadioButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    typeOfData = 'D';
+                }
+            });
             add(dnaTypeRadioButton, gbc);
-            
+
             rnaTypeRadioButton = new JRadioButton("RNA");
             gbc.gridx = 3;
             gbc.gridy = 0;
             typeGroup.add(rnaTypeRadioButton);
-            rnaTypeRadioButton.addActionListener(new ActionListener(){@Override public void actionPerformed(ActionEvent e){typeOfData = 'R';}});
-            add(rnaTypeRadioButton, gbc);   
-            
-            proteinTypeRadioButton = new JRadioButton("Protein"); 
+            rnaTypeRadioButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    typeOfData = 'R';
+                }
+            });
+            add(rnaTypeRadioButton, gbc);
+
+            proteinTypeRadioButton = new JRadioButton("Protein");
             gbc.gridx = 4;
             gbc.gridy = 0;
             typeGroup.add(proteinTypeRadioButton);
-            proteinTypeRadioButton.addActionListener(new ActionListener(){@Override public void actionPerformed(ActionEvent e){typeOfData = 'P';}});
+            proteinTypeRadioButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    typeOfData = 'P';
+                }
+            });
             add(proteinTypeRadioButton, gbc);
-            
+ 
         }
-            
+
     }
-    
-    private void sequenceAlign() {
+
+private void sequenceAlign() {
         String str1 = getText(1);
         String str2 = getText(2);
         Parser pars1 = new Parser(str1);
         Parser pars2 = new Parser(str2);
-        
-        if(typeOfData == 'D'){
-            ArrayList <DNASequence> out = new ArrayList<>();
+
+        if (typeOfData == 'D') {
+            ArrayList<DNASequence> out = new ArrayList<>();
             out.add(pars1.parseDNA());
             out.add(pars2.parseDNA());
             Aligner aligner = new Aligner();
             out = aligner.needlemanWunsch(out);
             seq1Area.setText(out.get(0).toReadable());
             seq2Area.setText(out.get(1).toReadable());
-        } else if(typeOfData == 'E'){
-            ArrayList <RNASequence> out = new ArrayList<>();
+        } else if (typeOfData == 'E') {
+            ArrayList<RNASequence> out = new ArrayList<>();
             out.add(pars1.parseRNA());
             out.add(pars2.parseRNA());
             Aligner aligner = new Aligner();
             out = aligner.needlemanWunsch(out);
             seq1Area.setText(out.get(0).toReadable());
             seq2Area.setText(out.get(1).toReadable());
-        } else if(typeOfData == 'P'){
-            ArrayList <ProteinSequence> out = new ArrayList<>();
+        } else if (typeOfData == 'P') {
+            ArrayList<ProteinSequence> out = new ArrayList<>();
             out.add(pars1.parseProtein());
             out.add(pars2.parseProtein());
             Aligner aligner = new Aligner();
             out = aligner.needlemanWunsch(out);
             seq1Area.setText(out.get(0).toReadable());
             seq2Area.setText(out.get(1).toReadable());
-        }           
+        }
     }
 
-    public String getText(int sequence){
+    public String getText(int sequence) {
         String s = "";
-        if(sequence == 1){
+        if (sequence == 1) {
             s = seq1Area.getText();
-        }else if(sequence == 2){
+        } else if (sequence == 2) {
             s = seq2Area.getText();
         }
         return s;

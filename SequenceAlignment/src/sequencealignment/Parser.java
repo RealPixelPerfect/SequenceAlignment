@@ -1,7 +1,7 @@
 package sequencealignment;
 
 public class Parser {
-
+    
     static final int DASH=Character.MAX_VALUE;
     
     static final int RNA_A=0;
@@ -35,6 +35,11 @@ public class Parser {
     static final int PROTEIN_Y=18;
     static final int PROTEIN_V=19;
     
+    static final String DNA_LETTERS = "AUCG";
+    static final String RNA_LETTERS = "ATCG";
+    static final String PROTEIN_LETTERS = "ARNDCQEGHILKMFPSTWYV";
+    
+    
     char[] charArray;
     
     Parser(String inputString){
@@ -46,23 +51,8 @@ public class Parser {
     public RNASequence parseRNA(){
         char[] modifiedCharArray = new char[charArray.length];
         for (int i = 0; i < charArray.length; i++) {
-            switch(charArray[i]){
-                case 'A':
-                    modifiedCharArray[i] = RNA_A;
-                    break;
-                case 'U':
-                    modifiedCharArray[i] = RNA_U;
-                    break;
-                case 'C':
-                    modifiedCharArray[i] = RNA_C;
-                    break;
-                case 'G':
-                    modifiedCharArray[i] = RNA_G;
-                    break;
-                case '-':
-                    modifiedCharArray[i] = DASH;
-                    break;
-            }
+            char index=(char)RNA_LETTERS.indexOf(charArray[i]);
+            modifiedCharArray[i]=index;
         }
         String outString = new String(modifiedCharArray);
         return new RNASequence(outString);
@@ -71,23 +61,8 @@ public class Parser {
     public DNASequence parseDNA(){
         char[] modifiedCharArray = new char[charArray.length];
         for (int i = 0; i < charArray.length; i++) {
-            switch(charArray[i]){
-                case 'A':
-                    modifiedCharArray[i] = DNA_A;
-                    break;
-                case 'T':
-                    modifiedCharArray[i] = DNA_T;
-                    break;
-                case 'C':
-                    modifiedCharArray[i] = DNA_C;
-                    break;
-                case 'G':
-                    modifiedCharArray[i] = DNA_G;
-                    break;
-                case '-':
-                    modifiedCharArray[i] = DASH;
-                    break;
-            }
+            char index=(char)DNA_LETTERS.indexOf(charArray[i]);
+            modifiedCharArray[i]=index;
         }
         String outString = new String(modifiedCharArray);
         return new DNASequence(outString);
@@ -97,71 +72,8 @@ public class Parser {
     public ProteinSequence parseProtein(){
         char[] modifiedCharArray = new char[charArray.length];
         for (int i = 0; i < charArray.length; i++) {
-            switch(charArray[i]){
-                case 'A':
-                    modifiedCharArray[i] = PROTEIN_A;
-                    break;
-                case 'R':
-                    modifiedCharArray[i] = PROTEIN_R;
-                    break;
-                case 'N':
-                    modifiedCharArray[i] = PROTEIN_N;
-                    break;
-                case 'D':
-                    modifiedCharArray[i] = PROTEIN_D;
-                    break;
-                case 'C':
-                    modifiedCharArray[i] = PROTEIN_C;
-                    break;
-                case 'Q':
-                    modifiedCharArray[i] = PROTEIN_Q;
-                    break;
-                case 'E':
-                    modifiedCharArray[i] = PROTEIN_E;
-                    break;
-                case 'G':
-                    modifiedCharArray[i] = PROTEIN_G;
-                    break;
-                case 'H':
-                    modifiedCharArray[i] = PROTEIN_H;
-                    break;
-                case 'I':
-                    modifiedCharArray[i] = PROTEIN_I;
-                    break;
-                case 'L':
-                    modifiedCharArray[i] = PROTEIN_L;
-                    break;
-                case 'K':
-                    modifiedCharArray[i] = PROTEIN_K;
-                    break;
-                case 'M':
-                    modifiedCharArray[i] = PROTEIN_M;
-                    break;
-                case 'F':
-                    modifiedCharArray[i] = PROTEIN_F;
-                    break;
-                case 'P':
-                    modifiedCharArray[i] = PROTEIN_P;
-                    break;
-                case 'S':
-                    modifiedCharArray[i] = PROTEIN_S;
-                    break;
-                case 'T':
-                    modifiedCharArray[i] = PROTEIN_T;
-                    break;
-                case 'W':
-                    modifiedCharArray[i] = PROTEIN_W;
-                    break;
-                case 'Y':
-                    modifiedCharArray[i] = PROTEIN_Y;
-                    break;
-                case 'V':
-                    modifiedCharArray[i] = PROTEIN_V;
-                    break;
-                case '-':
-                    modifiedCharArray[i] = DASH;
-                    break;
-            }
+            char index=(char)PROTEIN_LETTERS.indexOf(charArray[i]);
+            modifiedCharArray[i]=index;
         }
         String outString = new String(modifiedCharArray);
         return new ProteinSequence(outString);
