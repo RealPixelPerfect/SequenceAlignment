@@ -188,7 +188,7 @@ private void sequenceAlign() {
             out = aligner.needlemanWunsch(out);
             seq1Area.setText(out.get(0).toReadable());
             seq2Area.setText(out.get(1).toReadable());
-        } else if (typeOfData == 'E') {
+        } else if (typeOfData == 'R') {
             ArrayList<RNASequence> out = new ArrayList<>();
             out.add(pars1.parseRNA());
             out.add(pars2.parseRNA());
