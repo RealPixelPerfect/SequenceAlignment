@@ -15,7 +15,7 @@ public class ProteinSequence extends Sequence {
             if (initialCharArray[i] == Parser.DASH) {
                 output += '-';
             } else {
-                output += (char) Parser.PROTEIN_LETTERS.indexOf(initialCharArray[i]);
+                output += Parser.PROTEIN_LETTERS.charAt(initialCharArray[i]);
             }
         }
         return output;

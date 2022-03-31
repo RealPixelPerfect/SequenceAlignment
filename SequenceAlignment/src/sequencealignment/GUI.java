@@ -174,8 +174,8 @@ public class GUI extends JFrame {
     }
 
     private void sequenceAlign() {
-        String str1 = getText(1);
-        String str2 = getText(2);
+        String str1 = getText(1).toUpperCase();
+        String str2 = getText(2).toUpperCase();
         Parser pars1 = new Parser(str1);
         Parser pars2 = new Parser(str2);
 

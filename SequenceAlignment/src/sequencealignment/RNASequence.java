@@ -15,7 +15,7 @@ public class RNASequence extends Sequence {
             if (initialCharArray[i] == Parser.DASH) {
                 output += '-';
             } else {
-                output += (char) Parser.RNA_LETTERS.indexOf(initialCharArray[i]);
+                output += Parser.RNA_LETTERS.charAt(initialCharArray[i]);
             }
         }
 

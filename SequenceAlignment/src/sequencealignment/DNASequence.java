@@ -13,9 +13,9 @@ public class DNASequence extends NucleotideSequence {
 
         for (int i = 0; i < sequenceString.length(); i++) {
             if (initialCharArray[i] == Parser.DASH) {
-                output += '-';
+                output += "--";
             } else {
-                output += (char) Parser.DNA_LETTERS.indexOf(initialCharArray[i]);
+                output += Parser.DNA_LETTERS.charAt(initialCharArray[i]);
             }
         }
 

@@ -35,8 +35,8 @@ public class Parser {
     static final int PROTEIN_Y = 18;
     static final int PROTEIN_V = 19;
 
-    static final String DNA_LETTERS = "AUCG";
-    static final String RNA_LETTERS = "ATCG";
+    static final String DNA_LETTERS = "ATCG";
+    static final String RNA_LETTERS = "AUCG";
     static final String PROTEIN_LETTERS = "ARNDCQEGHILKMFPSTWYV";
 
     char[] charArray;
