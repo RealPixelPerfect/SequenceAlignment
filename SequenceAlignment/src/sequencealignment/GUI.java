@@ -17,7 +17,7 @@ public class GUI extends JFrame {
     JRadioButton dnaTypeRadioButton, rnaTypeRadioButton, proteinTypeRadioButton;
 
     //Is data DNA = D, RNA = R or Protein = P
-    char typeOfData = ' ';
+    char typeOfData = 'D';
 
     GUI() {
         MainPanel mainPanel = new MainPanel();
@@ -134,7 +134,7 @@ public class GUI extends JFrame {
             //Radio Buttons
             ButtonGroup typeGroup = new ButtonGroup();
 
-            dnaTypeRadioButton = new JRadioButton("DNA");
+            dnaTypeRadioButton = new JRadioButton("DNA", true);
             gbc.gridx = 2;
             gbc.gridy = 0;
             typeGroup.add(dnaTypeRadioButton);
@@ -169,41 +169,34 @@ public class GUI extends JFrame {
                 }
             });
             add(proteinTypeRadioButton, gbc);
- 
-        }
 
+        }
     }
 
-private void sequenceAlign() {
+    private void sequenceAlign() {
         String str1 = getText(1);
         String str2 = getText(2);
         Parser pars1 = new Parser(str1);
         Parser pars2 = new Parser(str2);
 
         if (typeOfData == 'D') {
-            ArrayList<DNASequence> out = new ArrayList<>();
-            out.add(pars1.parseDNA());
-            out.add(pars2.parseDNA());
+            DNASequence[] in = {pars1.parseDNA(), pars2.parseDNA()};
             Aligner aligner = new Aligner();
-            out = aligner.needlemanWunsch(out);
-            seq1Area.setText(out.get(0).toReadable());
-            seq2Area.setText(out.get(1).toReadable());
+            in = aligner.needlemanWunsch(in);
+            seq1Area.setText(in[0].toReadable());
+            seq2Area.setText(in[1].toReadable());
         } else if (typeOfData == 'R') {
-            ArrayList<RNASequence> out = new ArrayList<>();
-            out.add(pars1.parseRNA());
-            out.add(pars2.parseRNA());
+            RNASequence[] in = {pars1.parseRNA(), pars2.parseRNA()};
             Aligner aligner = new Aligner();
-            out = aligner.needlemanWunsch(out);
-            seq1Area.setText(out.get(0).toReadable());
-            seq2Area.setText(out.get(1).toReadable());
+            in = aligner.needlemanWunsch(in);
+            seq1Area.setText(in[0].toReadable());
+            seq2Area.setText(in[1].toReadable());
         } else if (typeOfData == 'P') {
-            ArrayList<ProteinSequence> out = new ArrayList<>();
-            out.add(pars1.parseProtein());
-            out.add(pars2.parseProtein());
+            ProteinSequence[] in = {pars1.parseProtein(), pars2.parseProtein()};
             Aligner aligner = new Aligner();
-            out = aligner.needlemanWunsch(out);
-            seq1Area.setText(out.get(0).toReadable());
-            seq2Area.setText(out.get(1).toReadable());
+            in = aligner.needlemanWunsch(in);
+            seq1Area.setText(in[0].toReadable());
+            seq2Area.setText(in[1].toReadable());
         }
     }
 

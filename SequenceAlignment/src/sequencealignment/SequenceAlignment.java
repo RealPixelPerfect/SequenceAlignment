@@ -1,4 +1,3 @@
-
 package sequencealignment;
 
 public class SequenceAlignment {
@@ -8,6 +7,7 @@ public class SequenceAlignment {
      */
     public static void main(String[] args) {
         GUI gui = new GUI();
+
     }
-    
+
 }
