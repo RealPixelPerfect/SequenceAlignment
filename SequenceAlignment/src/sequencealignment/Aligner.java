@@ -231,13 +231,12 @@ public class Aligner {
         }
     }*/
     
-    ArrayList<Sequence> needlemanWunsch(ArrayList<Sequence> sequenceArray){ //Fixa så att den går baklänges och funkar för RNA och proteiner
+    DNASequence[] needlemanWunsch(DNASequence[] sequenceArray){ //Fixa så att den går baklänges och funkar för RNA och proteiner
         
-        if(sequenceArray.size()<2){
+        if(sequenceArray.length<2){
             return null;
-        } else if(sequenceArray.size()==2){
+        } else if(sequenceArray.length==2){
             class Match{
-            
             Match(int score, char origin){
                 this.score=score;
                 this.origin=origin;
@@ -247,18 +246,9 @@ public class Aligner {
             char origin; //u: up, d: diagonal, l: left, s: start
             }
             char sequenceType=0;
-            if(sequenceArray.get(0) instanceof DNASequence){
-                sequenceType='D';
-            } else if(sequenceArray.get(0) instanceof RNASequence){
-                sequenceType='R';
-            }
-            
-            else if(sequenceArray.get(0) instanceof ProteinSequence){
-                sequenceType='P';
-            }
-            String sequence1=sequenceArray.get(0).getSequence();
+            String sequence1=sequenceArray[0].getSequence();
             int sequence1Size=sequence1.length();
-            String sequence2=sequenceArray.get(1).getSequence();
+            String sequence2=sequenceArray[1].getSequence();
             int sequence2Size=sequence2.length();
             //System.out.print("Seq1: ");
             /*for(char c:sequence1.toCharArray()){
@@ -302,17 +292,7 @@ public class Aligner {
                     int base1=(int)sequence1.charAt(row-1);
                     int base2=(int)sequence2.charAt(column-1);
                     int diagonalScore=0;
-                    switch(sequenceType){
-                        case 'D':
-                            diagonalScore=diagonal.score+DNA_SUBSTITUTION_MATRIX[base1][base2];
-                            break;
-                        case 'P':
-                            diagonalScore=diagonal.score+PROTEIN_SUBSTITUTION_MATRIX[base1][base2];
-                            break;
-                        case 'R':
-                            diagonalScore=diagonal.score+DNA_SUBSTITUTION_MATRIX[base1][base2];
-                            break;
-                    }
+                    diagonalScore=diagonal.score+DNA_SUBSTITUTION_MATRIX[base1][base2];
                     //System.out.println("base1: "+base1+ " base2: "+base2);
                     Match right=alignmentGrid.get(new Point(row,column-1));
                     int rightScore=right.score+gap;
@@ -368,26 +348,19 @@ public class Aligner {
                 }
             }while(direction!='s');
             
-            ArrayList<Sequence> returnArray = new ArrayList<>();
-            switch(sequenceType){
-                case 'D':
-                    returnArray.add(new DNASequence(alignedSequence1));
-                    returnArray.add(new DNASequence(alignedSequence2));
-                    return returnArray;
-                case 'R':
-                    returnArray.add(new DNASequence(alignedSequence1));
-                    returnArray.add(new DNASequence(alignedSequence2));
-                    return returnArray;
-                case 'P':
-                    returnArray.add(new DNASequence(alignedSequence1));
-                    returnArray.add(new DNASequence(alignedSequence2));
-                    return returnArray;
-            }
+            //Fixa så att rätt typ av sekvens returneras
+            DNASequence[] returnArray = {new DNASequence(alignedSequence1),new DNASequence(alignedSequence2)};
+            return returnArray;
+            
+            
+            
+        } else{
             return null;
-            
-            
-            
-            //Calculate the best path for each point
+        }
+    }   
+}
+
+//Calculate the best path for each point
             /*
             
             010233321002
@@ -409,10 +382,3 @@ public class Aligner {
             C -6  -3  -1   1   4 > 3   2   2   3 > 2   3   3   5
                |   |   | \     | \   \   \   \   \     |   | \    
             G -7  -4  -2   0   3   6   5   4   3   2   2   2   4*/
-        } else{
-            return null;
-        }
-    }
-    
-    
-}
