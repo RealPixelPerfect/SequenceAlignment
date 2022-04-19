@@ -36,7 +36,7 @@ public class GUI extends JFrame {
         pack();
         setLocationRelativeTo(null);
         setExtendedState(MAXIMIZED_BOTH);
-        setMinimumSize(new Dimension(924, 417));
+        setMinimumSize(new Dimension(930, 480));
         setVisible(true);
         
         try{
@@ -258,9 +258,9 @@ public class GUI extends JFrame {
             seq1Area.setText(convertSequence1.flip("DNA"));
             seq2Area.setText(convertSequence2.flip("DNA"));
         }else if(typeOfData == 'R'){
-            DNASequence[] in = {pars1.parseDNA(), pars2.parseDNA()};
-            seq1Area.setText(in[0].toRNA());
-            seq2Area.setText(in[1].toRNA());
+            RNASequence[] in = {pars1.parseRNA(), pars2.parseRNA()};
+            seq1Area.setText(in[0].toDNA());
+            seq2Area.setText(in[1].toDNA());
         }else if(typeOfData == 'P'){
         
         }
@@ -273,9 +273,9 @@ public class GUI extends JFrame {
         if(typeOfData == 'D'){
             Parser pars1 = new Parser(str1);
             Parser pars2 = new Parser(str2);
-            RNASequence[] in = {pars1.parseRNA(), pars2.parseRNA()};
-            seq1Area.setText(in[0].toDNA());
-            seq2Area.setText(in[1].toDNA());
+            DNASequence[] in = {pars1.parseDNA(), pars2.parseDNA()};
+            seq1Area.setText(in[0].toRNA());
+            seq2Area.setText(in[1].toRNA());
         }else if(typeOfData == 'R'){
             Sequence convertSequence1 = new Sequence(str1);
             Sequence convertSequence2 = new Sequence(str2);

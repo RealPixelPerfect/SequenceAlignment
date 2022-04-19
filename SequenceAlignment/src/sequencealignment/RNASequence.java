@@ -24,8 +24,7 @@ public class RNASequence extends Sequence {
         return output;
 
     }
-    
-    
+        
     String toDNA(){
         char[] initialCharArray = sequenceString.toCharArray();
         String output = "";
@@ -37,10 +36,12 @@ public class RNASequence extends Sequence {
                 if(initialCharArray[i] < Parser.RNA_LETTERS.length()){
                     output += Parser.RNA_LETTERS.charAt((int) initialCharArray[i]);
                 }
-                
             }
         }
-
         return output;
+    }
+    
+    String toProtein(){
+        return "";
     }
 }

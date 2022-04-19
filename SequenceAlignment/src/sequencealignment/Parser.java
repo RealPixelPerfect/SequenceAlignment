@@ -34,11 +34,35 @@ public class Parser {
     static final int PROTEIN_W = 17;
     static final int PROTEIN_Y = 18;
     static final int PROTEIN_V = 19;
-
+    static final int STOP = -1;
+    
     static final String DNA_LETTERS = "ATCG";
     static final String RNA_LETTERS = "AUCG";
     static final String PROTEIN_LETTERS = "ARNDCQEGHILKMFPSTWYV";
 
+    static final int[][][] GENETIC_CODE = 
+    {
+        {{PROTEIN_K, PROTEIN_N, PROTEIN_N, PROTEIN_K}, //AAA, AAT, AAC, AAG
+         {PROTEIN_I, PROTEIN_I, PROTEIN_I, PROTEIN_M}, //ATA, ATT, ATC, ATG
+         {PROTEIN_T, PROTEIN_T, PROTEIN_T, PROTEIN_T}, //ACA, ACT, ACC, ACG
+         {PROTEIN_R, PROTEIN_S, PROTEIN_S, PROTEIN_R}},//AGA, AGT, AGC, AGG
+        
+        {{STOP     , PROTEIN_Y, PROTEIN_Y, STOP     }, //TAA, TAT, TAC, TAG
+         {PROTEIN_L, PROTEIN_F, PROTEIN_F, PROTEIN_L},
+         {PROTEIN_S, PROTEIN_S, PROTEIN_S, PROTEIN_S},
+         {STOP     , PROTEIN_C, PROTEIN_C, PROTEIN_W}},
+        
+        {{PROTEIN_Q, PROTEIN_H, PROTEIN_H, PROTEIN_Q}, //C...
+         {PROTEIN_L, PROTEIN_L, PROTEIN_L, PROTEIN_L},
+         {PROTEIN_P, PROTEIN_P, PROTEIN_P, PROTEIN_P},
+         {PROTEIN_R, PROTEIN_R, PROTEIN_R, PROTEIN_R}},
+        
+        {{PROTEIN_E, PROTEIN_D, PROTEIN_D, PROTEIN_E}, //G...
+         {PROTEIN_V, PROTEIN_V, PROTEIN_V, PROTEIN_V},
+         {PROTEIN_A, PROTEIN_A, PROTEIN_A, PROTEIN_A},
+         {PROTEIN_G, PROTEIN_G, PROTEIN_G, PROTEIN_G}}
+    };
+    
     char[] charArray;
 
     Parser(String inputString) {

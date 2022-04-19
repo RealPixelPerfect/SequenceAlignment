@@ -37,10 +37,8 @@ public class DNASequence extends NucleotideSequence {
                 if(initialCharArray[i] < Parser.DNA_LETTERS.length()){
                     output += Parser.DNA_LETTERS.charAt((int) initialCharArray[i]);
                 }
-                
             }
         }
-
         return output;
     }
     
