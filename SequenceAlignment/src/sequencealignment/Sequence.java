@@ -46,4 +46,27 @@ public class Sequence {
         }
         return output;
     }
+    
+    String flip(String type){
+        char[] initialCharArray = sequenceString.toCharArray();
+        String output = "";
+        
+        for (int i = 0; i < sequenceString.length(); i++) {
+            if (initialCharArray[i] == 'C') {
+                output += 'G';
+            }else if (initialCharArray[i] == 'G') {
+                output += 'C';
+            }else if (initialCharArray[i] == 'A') {
+                if(type == "DNA"){
+                    output += 'T';
+                } else {
+                    output += 'U';
+                }
+            }else if (initialCharArray[i] == 'T' || initialCharArray[i] == 'U') {
+                output += 'A';
+            }
+        }
+
+        return output;
+    };
 }

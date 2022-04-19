@@ -43,36 +43,40 @@ public class Parser {
 
     Parser(String inputString) {
         charArray = inputString.toCharArray();
+        
     }
 
     public RNASequence parseRNA() {
-        char[] modifiedCharArray = new char[charArray.length];
+        String outString = "";
         for (int i = 0; i < charArray.length; i++) {
-            char index = (char) RNA_LETTERS.indexOf(charArray[i]);
-            modifiedCharArray[i] = index;
+            int index = RNA_LETTERS.indexOf(charArray[i]);
+            if(index != -1){
+                outString += (char) index;
+            }
         }
-        String outString = new String(modifiedCharArray);
         return new RNASequence(outString);
     }
 
     public DNASequence parseDNA() {
-        char[] modifiedCharArray = new char[charArray.length];
+        String outString = "";
         for (int i = 0; i < charArray.length; i++) {
-            char index = (char) DNA_LETTERS.indexOf(charArray[i]);
-            modifiedCharArray[i] = index;
+            int index = DNA_LETTERS.indexOf(charArray[i]);
+            if(index != -1){
+                outString += (char) index;
+            }
         }
-        String outString = new String(modifiedCharArray);
         return new DNASequence(outString);
 
     }
 
     public ProteinSequence parseProtein() {
-        char[] modifiedCharArray = new char[charArray.length];
+        String outString = "";
         for (int i = 0; i < charArray.length; i++) {
-            char index = (char) PROTEIN_LETTERS.indexOf(charArray[i]);
-            modifiedCharArray[i] = index;
+            int index = PROTEIN_LETTERS.indexOf(charArray[i]);
+            if(index != -1){
+                outString += (char) index;
+            }
         }
-        String outString = new String(modifiedCharArray);
         return new ProteinSequence(outString);
     }
 }

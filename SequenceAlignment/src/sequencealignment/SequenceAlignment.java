@@ -9,5 +9,5 @@ public class SequenceAlignment {
         GUI gui = new GUI();
 
     }
-
+    
 }
