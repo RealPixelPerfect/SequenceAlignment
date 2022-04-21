@@ -120,7 +120,7 @@ public class GUI extends JFrame {
             convertDNAButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    convertDNA();
+                    convertToDNA();
                 }
             });
             
@@ -136,7 +136,7 @@ public class GUI extends JFrame {
             convertRNAButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    convertRNA();
+                    convertToRNA();
                 }
             });
             
@@ -152,7 +152,7 @@ public class GUI extends JFrame {
             convertProteinButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    convertProtein();
+                    convertToProtein();
                 }
             });
             
@@ -246,27 +246,46 @@ public class GUI extends JFrame {
         }
     }
     
-    private void convertDNA(){
+    private void convertToDNA(){
         String str1 = seq1Area.getText().toUpperCase();
         String str2 = seq2Area.getText().toUpperCase();
         Parser pars1 = new Parser(str1);
         Parser pars2 = new Parser(str2);
         
         if(typeOfData == 'D'){
-            Sequence convertSequence1 = new Sequence(str1);
-            Sequence convertSequence2 = new Sequence(str2);
-            seq1Area.setText(convertSequence1.flip("DNA"));
-            seq2Area.setText(convertSequence2.flip("DNA"));
+            DNASequence[] in = {pars1.parseDNA(), pars2.parseDNA()};
+            seq1Area.setText(in[0].flip());
+            seq2Area.setText(in[1].flip());
         }else if(typeOfData == 'R'){
             RNASequence[] in = {pars1.parseRNA(), pars2.parseRNA()};
             seq1Area.setText(in[0].toDNA());
             seq2Area.setText(in[1].toDNA());
         }else if(typeOfData == 'P'){
-        
+            seq1Area.setText(str1+" This operation does not work");
         }
     }
     
-    private void convertRNA(){
+    private void convertToRNA(){
+        String str1 = seq1Area.getText().toUpperCase();
+        String str2 = seq2Area.getText().toUpperCase();
+        Parser pars1 = new Parser(str1);
+        Parser pars2 = new Parser(str2);
+        
+        if(typeOfData == 'D'){
+            
+            DNASequence[] in = {pars1.parseDNA(), pars2.parseDNA()};
+            seq1Area.setText(in[0].toRNA());
+            seq2Area.setText(in[1].toRNA());
+        }else if(typeOfData == 'R'){
+            RNASequence[] in = {pars1.parseRNA(), pars2.parseRNA()};
+            seq1Area.setText(in[0].flip());
+            seq2Area.setText(in[1].flip());
+        }else if(typeOfData == 'P'){
+            seq1Area.setText(str1+" This operation does not work");
+        }
+    }
+    
+    private void convertToProtein(){
         String str1 = seq1Area.getText().toUpperCase();
         String str2 = seq2Area.getText().toUpperCase();
         
@@ -274,20 +293,16 @@ public class GUI extends JFrame {
             Parser pars1 = new Parser(str1);
             Parser pars2 = new Parser(str2);
             DNASequence[] in = {pars1.parseDNA(), pars2.parseDNA()};
-            seq1Area.setText(in[0].toRNA());
-            seq2Area.setText(in[1].toRNA());
+            seq1Area.setText(in[0].toProtein());
+            seq2Area.setText(in[1].toProtein());
         }else if(typeOfData == 'R'){
-            Sequence convertSequence1 = new Sequence(str1);
-            Sequence convertSequence2 = new Sequence(str2);
-            seq1Area.setText(convertSequence1.flip("RNA"));
-            seq2Area.setText(convertSequence2.flip("RNA"));
+            Parser pars1 = new Parser(str1);
+            Parser pars2 = new Parser(str2);
+            RNASequence[] in = {pars1.parseRNA(), pars2.parseRNA()};
+            seq1Area.setText(in[0].toProtein());
+            seq2Area.setText(in[1].toProtein());
         }else if(typeOfData == 'P'){
-        
+            seq1Area.setText(str1+" This operation does not work");
         }
-    }
-    
-    private void convertProtein(){
-        String str1 = seq1Area.getText().toUpperCase();
-        String str2 = seq2Area.getText().toUpperCase();
     }
 }

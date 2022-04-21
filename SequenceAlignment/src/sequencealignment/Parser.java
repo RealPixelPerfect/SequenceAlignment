@@ -34,11 +34,11 @@ public class Parser {
     static final int PROTEIN_W = 17;
     static final int PROTEIN_Y = 18;
     static final int PROTEIN_V = 19;
-    static final int STOP = -1;
+    static final int STOP = 20;
     
     static final String DNA_LETTERS = "ATCG";
     static final String RNA_LETTERS = "AUCG";
-    static final String PROTEIN_LETTERS = "ARNDCQEGHILKMFPSTWYV";
+    static final String PROTEIN_LETTERS = "ARNDCQEGHILKMFPSTWYV*";
 
     static final int[][][] GENETIC_CODE = 
     {

@@ -21,6 +21,5 @@ public class ProteinSequence extends Sequence {
             }
         }
         return output;
-    }
-
+    } 
 }
