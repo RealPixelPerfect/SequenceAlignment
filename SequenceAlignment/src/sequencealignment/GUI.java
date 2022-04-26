@@ -229,20 +229,23 @@ public class GUI extends JFrame {
             DNASequence[] in = {pars1.parseDNA(), pars2.parseDNA()};
             Aligner aligner = new Aligner();
             in = aligner.needlemanWunsch(in);
-            seq1Area.setText(in[0].toReadable());
-            seq2Area.setText(in[1].toReadable());
+            String[] matchedString = matchCases(in[0].toReadable(), in[1].toReadable());
+            seq1Area.setText(matchedString[0]);
+            seq2Area.setText(matchedString[1]);
         } else if (typeOfData == 'R') {
             RNASequence[] in = {pars1.parseRNA(), pars2.parseRNA()};
             Aligner aligner = new Aligner();
             in = aligner.needlemanWunsch(in);
-            seq1Area.setText(in[0].toReadable());
-            seq2Area.setText(in[1].toReadable());
+            String[] matchedString = matchCases(in[0].toReadable(), in[1].toReadable());
+            seq1Area.setText(matchedString[0]);
+            seq2Area.setText(matchedString[1]);
         } else if (typeOfData == 'P') {
             ProteinSequence[] in = {pars1.parseProtein(), pars2.parseProtein()};
             Aligner aligner = new Aligner();
             in = aligner.needlemanWunsch(in);
-            seq1Area.setText(in[0].toReadable());
-            seq2Area.setText(in[1].toReadable());
+            String[] matchedString = matchCases(in[0].toReadable(), in[1].toReadable());
+            seq1Area.setText(matchedString[0]);
+            seq2Area.setText(matchedString[1]);
         }
     }
     
@@ -304,5 +307,24 @@ public class GUI extends JFrame {
         }else if(typeOfData == 'P'){
             seq1Area.setText(str1+" This operation does not work");
         }
+    }
+    
+    private String[] matchCases(String inString1, String inString2){
+        String[] outString = {"", ""};
+        
+        int shortestLength = Math.min(inString1.length(), inString2.length());
+                
+        for (int i = 0; i < shortestLength; i++) {
+            char[] charI = {inString1.charAt(i), inString2.charAt(i)};
+            if(inString1.charAt(i) == inString2.charAt(i)){
+                outString[0] += Character.toUpperCase(charI[0]);
+                outString[1] += Character.toUpperCase(charI[1]);
+            } else {
+                outString[0] += Character.toLowerCase(charI[0]);
+                outString[1] += Character.toLowerCase(charI[1]);
+            }
+        }
+        
+        return outString;
     }
 }
